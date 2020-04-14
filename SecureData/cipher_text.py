@@ -19,7 +19,7 @@ def encrypt(key, msg, salt=None):
     iv = Random.new().read(AES.block_size)
     cipher = AES.new(key, AES.MODE_CFB, iv)
 
-    return b64encode((iv + cipher.encrypt(msg)))
+    return b64encode((iv + cipher.encrypt(msg))).decode('utf-8')
 
 
 def decrypt(key, msg, salt=None):
@@ -33,4 +33,7 @@ def decrypt(key, msg, salt=None):
     iv = msg[:AES.block_size]
     cipher = AES.new(key, AES.MODE_CFB, iv)
 
-    return cipher.decrypt(msg[AES.block_size:]).rstrip(b'\0')
+    try:
+        return cipher.decrypt(msg[AES.block_size:]).rstrip(b'\0').decode('utf-8')
+    except UnicodeDecodeError:
+        return 'Incorrect decryption password or salt.'

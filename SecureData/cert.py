@@ -2,6 +2,7 @@ from Crypto.Cipher import PKCS1_OAEP
 from Crypto.PublicKey import RSA
 from OpenSSL import crypto
 import random
+from base64 import b64encode, b64decode
 
 
 def generate_cert(days=365, size=2048, serial_number=random.getrandbits(64),
@@ -46,7 +47,7 @@ def encrypt_with_cert(msg, public_key):
     key = RSA.importKey(public_key_data)
     cipher = PKCS1_OAEP.new(key)
     encrypted_message = cipher.encrypt(msg.encode('utf-8'))
-    return encrypted_message
+    return b64encode(encrypted_message).decode('utf-8')
 
 
 def decrypt_with_cert(msg, private_key):
@@ -55,7 +56,8 @@ def decrypt_with_cert(msg, private_key):
     key = RSA.importKey(private_key_data)
     cipher = PKCS1_OAEP.new(key)
     try:
-        decrypted_message = cipher.decrypt(msg)
+        decrypted_message = cipher.decrypt(b64decode(msg))
     except ValueError:
         return 'Incorrect decryption key.'
-    return decrypted_message
+    else:
+        return decrypted_message.decode('utf-8')

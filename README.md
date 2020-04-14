@@ -7,7 +7,7 @@ A Python module to encrypt and decrypt data using passwords or certs.
 ```python
 from SecureData import cert
 
-cert.generate_cert(days=365, size=2048, serial_number=123, public_key='mypub.crt', private_key='mypriv.key')
+cert.generate_cert(public_key='/etc/pki/tls/certs/mypub.crt', private_key='/etc/pki/tls/private/mypriv.key')
 ```
 Answer all the prompts
 
@@ -27,7 +27,7 @@ print(my_encrypted_text)
 ```python
 from SecureData import cert
 
-my_encrypted_text = '16as1dgf61asdf51as3d51fas35d1f6asef1'
+my_encrypted_text = 'iTnh1SnjZWebURp9Ng/cXPG9q7n9BNmmj8RagAZCtE8='
 my_plain_text = cert.decrypt_with_cert(my_encrypted_text, 'mypriv.key')
 print(my_plain_text)
 ```
