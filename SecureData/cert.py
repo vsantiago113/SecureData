@@ -5,8 +5,20 @@ import random
 from base64 import b64encode, b64decode
 
 
-def generate_cert(days=365, size=2048, serial_number=random.getrandbits(64),
-                  public_key='./public.crt', private_key='./private.key'):
+def generate_cert(days: int = 365, size: int = 2048, serial_number: int = random.getrandbits(64),
+                  public_key: str = './public.crt', private_key: str = './private.key'):
+    """
+    Generate an SSL certificate and output a public.crt and a private.key.
+
+    :param days:
+    :param size:
+    :param serial_number:
+    :param public_key:
+    :param private_key:
+
+    :return:
+    """
+
     k = crypto.PKey()
     k.generate_key(crypto.TYPE_RSA, size)
     country_name = input('Country Name (2 letter code) [XX]: ')

@@ -49,7 +49,7 @@ print(my_encrypted_text)
 from SecureData import cipher_text
 
 my_encrypted_text = 'iTnh1SnjZWebURp9Ng/cXPG9q7n9BNmmj8RagAZCtE8='
-my_plain_text = cipher_text.decrypt('mypass', my_encrypted_text)
+my_plain_text = cipher_text.decrypt('mypass', my_encrypted_text, salt='mysecretsalt')
 print(my_plain_text)
 ```
 
